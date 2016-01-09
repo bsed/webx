@@ -5,6 +5,7 @@ import java.io.File;
 import java.net.URL;
 import java.nio.charset.Charset;
 
+import cn.gnux.core.utils.log.Log;
 import cn.gnux.core.utils.log.StaticLog;
 import cn.gnux.core.utils.setting.dialect.BasicSetting;
 

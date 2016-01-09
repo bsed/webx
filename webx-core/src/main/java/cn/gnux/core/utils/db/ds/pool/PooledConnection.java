@@ -1,5 +1,11 @@
 package cn.gnux.core.utils.db.ds.pool;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import cn.gnux.core.utils.db.DbUtil;
+
 
 
 

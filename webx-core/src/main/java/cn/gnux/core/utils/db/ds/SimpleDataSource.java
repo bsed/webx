@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import cn.gnux.core.utils.Setting;
 import cn.gnux.core.utils.db.DbUtil;
 import cn.gnux.core.utils.exceptions.DbRuntimeException;
 
