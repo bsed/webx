@@ -39,8 +39,6 @@ public abstract class AbstractCache<K, V> implements Cache<K, V>, Iterable<V> {
 	/** 丢失数 */
 	protected int missCount;
 
-	// ---------------------------------------------------------------- put
-	// start
 	public void put(K key, V object) {
 		put(key, object, timeout);
 	}
@@ -62,10 +60,6 @@ public abstract class AbstractCache<K, V> implements Cache<K, V>, Iterable<V> {
 		}
 	}
 
-	// ---------------------------------------------------------------- put end
-
-	// ---------------------------------------------------------------- get
-	// start
 	/**
 	 * @return 命中数
 	 */
@@ -108,14 +102,11 @@ public abstract class AbstractCache<K, V> implements Cache<K, V>, Iterable<V> {
 		}
 	}
 
-	// ---------------------------------------------------------------- get end
 
 	public Iterator<V> iterator() {
 		return new CacheValuesIterator<V>(this);
 	}
 
-	// ---------------------------------------------------------------- prune
-	// start
 	/**
 	 * 清理实现
 	 * 
@@ -132,11 +123,6 @@ public abstract class AbstractCache<K, V> implements Cache<K, V>, Iterable<V> {
 		}
 	}
 
-	// ---------------------------------------------------------------- prune
-	// end
-
-	// ---------------------------------------------------------------- common
-	// start
 	public int capacity() {
 		return capacity;
 	}
@@ -192,6 +178,4 @@ public abstract class AbstractCache<K, V> implements Cache<K, V>, Iterable<V> {
 	public String toString() {
 		return this.cacheMap.toString();
 	}
-	// ---------------------------------------------------------------- common
-	// end
 }
