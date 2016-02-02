@@ -7,10 +7,8 @@ import java.util.Iterator;
  * 
  * @author jodd
  * 
- * @param <K>
- *            键类型
- * @param <V>
- *            值类型
+ * @param <K> 键类型
+ * @param <V> 值类型
  */
 public interface Cache<K, V> {
 
@@ -27,10 +25,8 @@ public interface Cache<K, V> {
 	/**
 	 * 将对象加入到缓存，使用默认失效时长
 	 * 
-	 * @param key
-	 *            键
-	 * @param object
-	 *            缓存的对象
+	 * @param key 键
+	 * @param object 缓存的对象
 	 * @see Cache#put(Object, Object, long)
 	 */
 	void put(K key, V object);
@@ -39,12 +35,9 @@ public interface Cache<K, V> {
 	 * 将对象加入到缓存，使用指定失效时长<br>
 	 * 如果缓存空间满了，{@link #prune()} 将被调用以获得空间来存放新对象
 	 * 
-	 * @param key
-	 *            键
-	 * @param object
-	 *            缓存的对象
-	 * @param timeout
-	 *            失效时长
+	 * @param key 键
+	 * @param object  缓存的对象
+	 * @param timeout  失效时长
 	 * @see Cache#put(Object, Object, long)
 	 */
 	void put(K key, V object, long timeout);
@@ -52,8 +45,7 @@ public interface Cache<K, V> {
 	/**
 	 * 从缓存中获得对象，当对象不在缓存中或已经过期返回<code>null</code>
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 键对应的对象
 	 */
 	V get(K key);
@@ -78,8 +70,7 @@ public interface Cache<K, V> {
 	/**
 	 * 从缓存中移除对象
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 */
 	void remove(K key);
 

@@ -14,18 +14,15 @@ import java.util.Iterator;
  * 
  * @author
  * 
- * @param <K>
- *            键类型
- * @param <V>
- *            值类型
+ * @param <K> 键类型
+ * @param <V> 值类型
  */
 public class FIFOCache<K, V> extends AbstractCache<K, V> {
 
 	/**
 	 * 构造，默认对象不过期
 	 * 
-	 * @param capacity
-	 *            容量
+	 * @param capacity 容量
 	 */
 	public FIFOCache(int capacity) {
 		this(capacity, 0);
@@ -34,10 +31,8 @@ public class FIFOCache<K, V> extends AbstractCache<K, V> {
 	/**
 	 * 构造
 	 * 
-	 * @param capacity
-	 *            容量
-	 * @param timeout
-	 *            过期时长
+	 * @param capacity  容量
+	 * @param timeout 过期时长
 	 */
 	public FIFOCache(int capacity, long timeout) {
 		this.capacity = capacity;

@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 /**
  * 无缓存实现，用于快速关闭缓存
- * @author Looly,jodd
+ * @author jodd
  *
  * @param <K> 键类型
  * @param <V> 值类型
