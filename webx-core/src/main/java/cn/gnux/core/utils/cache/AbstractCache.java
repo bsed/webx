@@ -15,10 +15,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * 
  * @author jodd
  * 
- * @param <K>
- *            键类型
- * @param <V>
- *            值类型
+ * @param <K> 键类型
+ * @param <V> 值类型
  */
 public abstract class AbstractCache<K, V> implements Cache<K, V>, Iterable<V> {
 
