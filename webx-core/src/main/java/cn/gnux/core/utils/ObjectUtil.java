@@ -26,7 +26,7 @@ public class ObjectUtil {
 	 * 3、对于基本类实现了{@link Object#equals(Object)}的话都会先判断类型是否匹配，类型不匹配返回false，可参考{@link String#equals(Object)}
 	 * 4、 关于如何利用此函数比较自定义对象可下载源代码，参考测试代码中的{@link ObjectUtilsTest#testIsEquals()}
 	 */
-	public static boolean equals(Object obj1, Object obj2) {
+	public static boolean isEquals(Object obj1, Object obj2) {
 		//return (obj1 != null) ? (obj1.equals(obj2)) : (obj2 == null);
 		return obj1 == null ? obj2 == null : obj1.equals(obj2);
 	}
