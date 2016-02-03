@@ -14,13 +14,19 @@ import java.util.UUID;
 public class RandomUtil {
 	private static Random random = new Random();
 	
-	/** 用于随机选的数字 */
-	private static final String BASE_NUMBER = "0123456789";
-	/** 用于随机选的字符 */
-	private static final String BASE_CHAR = "abcdefghijklmnopqrstuvwxyz";
-	/** 用于随机选的字符和数字 */
-	private static final String BASE_CHAR_NUMBER = BASE_CHAR + BASE_NUMBER;
 	
+//	private static final String BASE_NUMBER = "0123456789";
+//	/** 用于随机选的字符 */
+//	private static final String BASE_CHAR = "abcdefghijklmnopqrstuvwxyz";
+//	
+//	private static final String BASE_CHAR_NUMBER = BASE_CHAR + BASE_NUMBER;
+	/** 用于随机选的字符和数字 */
+	public static final String NUMBERS_AND_LETTERS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	/** 用于随机选的数字 */
+	public static final String NUMBERS             = "0123456789";
+    public static final String LETTERS             = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public static final String CAPITAL_LETTERS     = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public static final String LOWER_CASE_LETTERS  = "abcdefghijklmnopqrstuvwxyz";
 	/**
 	 * 获得指定范围内的随机数
 	 * @param min 最小数
@@ -93,7 +99,7 @@ public class RandomUtil {
 	 * @return 随机字符串
 	 */
 	public static String randomString(int length) {
-		return randomString(BASE_CHAR_NUMBER, length);
+		return randomString(NUMBERS_AND_LETTERS, length);
 	}
 	
 	/**
@@ -103,7 +109,7 @@ public class RandomUtil {
 	 * @return 随机字符串
 	 */
 	public static String randomNumbers(int length) {
-		return randomString(BASE_NUMBER, length);
+		return randomString(NUMBERS, length);
 	}
 	
 	/**
