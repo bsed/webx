@@ -102,7 +102,7 @@ public class ObjectUtil {
 			Iterator<?> iter = (Iterator<?>) obj;
 			while (iter.hasNext()) {
 				Object o = iter.next();
-				if (equals(o, element)) {
+				if (isEquals(o, element)) {
 					return true;
 				}
 			}
@@ -112,7 +112,7 @@ public class ObjectUtil {
 			Enumeration<?> enumeration = (Enumeration<?>) obj;
 			while (enumeration.hasMoreElements()) {
 				Object o = enumeration.nextElement();
-				if (equals(o, element)) {
+				if (isEquals(o, element)) {
 					return true;
 				}
 			}
@@ -122,7 +122,7 @@ public class ObjectUtil {
 			int len = Array.getLength(obj);
 			for (int i = 0; i < len; i++) {
 				Object o = Array.get(obj, i);
-				if (equals(o, element)) {
+				if (isEquals(o, element)) {
 					return true;
 				}
 			}
@@ -217,7 +217,8 @@ public class ObjectUtil {
 	 * 3、 若v1不为null，v2为null，则v1大于v2 <br>
 	 * 4、 若v1、v2均不为null，则利用v1的{@link Comparable#compareTo(Object)}判断，参数为v2 <br>
 	 */
+	@SuppressWarnings("unchecked")
 	public static <V> int compare(V v1, V v2) {
-		return v1 == null ? (v2 == null ? 0 : -1) : (v2 == null ? 1 : ((Comparable)v1).compareTo(v2));
+		return v1 == null ? (v2 == null ? 0 : -1) : (v2 == null ? 1 : ((Comparable<V>)v1).compareTo(v2));
 	}
 }

@@ -11,6 +11,7 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -51,7 +52,7 @@ public class FileUtil {
 	public static final String JAR_PATH_EXT = ".jar!";
 	/** 当Path为文件形式时, path会加入一个表示文件的前缀 */
 	public static final String PATH_FILE_PRE = "file:";
-
+	public final static String FILE_EXTENSION_SEPARATOR = ".";
 	/**
 	 * 列出目录文件<br>
 	 * 给定的绝对路径不能是压缩包中的路径
@@ -417,7 +418,7 @@ public class FileUtil {
 	 * @throws IOException
 	 */
 	public static File createTempFile(File dir) throws IOException {
-		return createTempFile("hutool", null, dir, true);
+		return createTempFile("tmp", null, dir, true);
 	}
 
 	/**
@@ -430,7 +431,7 @@ public class FileUtil {
 	 * @throws IOException
 	 */
 	public static File createTempFile(File dir, boolean isReCreat) throws IOException {
-		return createTempFile("hutool", null, dir, isReCreat);
+		return createTempFile("tmp", null, dir, isReCreat);
 	}
 
 	/**
@@ -1420,19 +1421,174 @@ public class FileUtil {
 		}
 		return subPath;
 	}
+	
+	 /**
+     * 读文件，每行作为list的一个元素
+     * 
+     * @param filePath 文件路径
+     * @return 若文件路径所在文件不存在返回null，否则返回文件内容
+     */
+    public static List<String> readFileToList(String filePath) {
+        File file = new File(filePath);
+        List<String> fileContent = new ArrayList<String>();
+        if (file != null && file.isFile()) {
+            BufferedReader reader = null;
+            try {
+                reader = new BufferedReader(new FileReader(file));
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    fileContent.add(line);
+                }
+                reader.close();
+                return fileContent;
+            } catch (IOException e) {
+                throw new RuntimeException("IOException occurred. ", e);
+            } finally {
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (IOException e) {
+                        throw new RuntimeException("IOException occurred. ", e);
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * 从路径中获得文件名（不包含后缀名）
+     * 
+     * @param filePath 文件路径
+     * @return 文件名（不包含后缀名）
+     * @see
+     * <pre>
+     *      getFileNameWithoutExtension(null)               =   null
+     *      getFileNameWithoutExtension("")                 =   ""
+     *      getFileNameWithoutExtension("   ")              =   "   "
+     *      getFileNameWithoutExtension("abc")              =   "abc"
+     *      getFileNameWithoutExtension("a.mp3")            =   "a"
+     *      getFileNameWithoutExtension("a.b.rmvb")         =   "a.b"
+     *      getFileNameWithoutExtension("c:\\")              =   ""
+     *      getFileNameWithoutExtension("c:\\a")             =   "a"
+     *      getFileNameWithoutExtension("c:\\a.b")           =   "a"
+     *      getFileNameWithoutExtension("c:a.txt\\a")        =   "a"
+     *      getFileNameWithoutExtension("/home/admin")      =   "admin"
+     *      getFileNameWithoutExtension("/home/admin/a.txt/b.mp3")  =   "b"
+     * </pre>
+     */
+    public static String getFileNameWithoutExtension(String filePath) {
+        if (StrUtil.isEmpty(filePath)) {
+            return filePath;
+        }
 
-	// -------------------------------------------------------------------------- Interface
+        int extenPosi = filePath.lastIndexOf(FILE_EXTENSION_SEPARATOR);
+        int filePosi = filePath.lastIndexOf(File.separator);
+        if (filePosi == -1) {
+            return (extenPosi == -1 ? filePath : filePath.substring(0, extenPosi));
+        } else {
+            if (extenPosi == -1) {
+                return filePath.substring(filePosi + 1);
+            } else {
+                return (filePosi < extenPosi ? filePath.substring(filePosi + 1, extenPosi) : filePath.substring(filePosi + 1));
+            }
+        }
+    }
+    
+    
+    /**
+     * 从路径中获得文件名（包含后缀名）
+     * 
+     * @param filePath 文件路径
+     * @return 文件名（包含后缀名）
+     * @see
+     * <pre>
+     *      getFileName(null)               =   null
+     *      getFileName("")                 =   ""
+     *      getFileName("   ")              =   "   "
+     *      getFileName("a.mp3")            =   "a.mp3"
+     *      getFileName("a.b.rmvb")         =   "a.b.rmvb"
+     *      getFileName("abc")              =   "abc"
+     *      getFileName("c:\\")              =   ""
+     *      getFileName("c:\\a")             =   "a"
+     *      getFileName("c:\\a.b")           =   "a.b"
+     *      getFileName("c:a.txt\\a")        =   "a"
+     *      getFileName("/home/admin")      =   "admin"
+     *      getFileName("/home/admin/a.txt/b.mp3")  =   "b.mp3"
+     * </pre>
+     */
+    public static String getFileName(String filePath) {
+        if (StrUtil.isEmpty(filePath)) {
+            return filePath;
+        }
+
+        int filePosi = filePath.lastIndexOf(File.separator);
+        if (filePosi == -1) {
+            return filePath;
+        }
+        return filePath.substring(filePosi + 1);
+    }
+
+    /**
+     * 从路径中获得文件夹路径
+     * 
+     * @param filePath 文件名
+     * @return 文件夹路径
+     * @see
+     * <pre>
+     *      getFolderName(null)               =   null
+     *      getFolderName("")                 =   ""
+     *      getFolderName("   ")              =   ""
+     *      getFolderName("a.mp3")            =   ""
+     *      getFolderName("a.b.rmvb")         =   ""
+     *      getFolderName("abc")              =   ""
+     *      getFolderName("c:\\")              =   "c:"
+     *      getFolderName("c:\\a")             =   "c:"
+     *      getFolderName("c:\\a.b")           =   "c:"
+     *      getFolderName("c:a.txt\\a")        =   "c:a.txt"
+     *      getFolderName("c:a\\b\\c\\d.txt")    =   "c:a\\b\\c"
+     *      getFolderName("/home/admin")      =   "/home"
+     *      getFolderName("/home/admin/a.txt/b.mp3")  =   "/home/admin/a.txt"
+     * </pre>
+     */
+    public static String getFolderName(String filePath) {
+
+        if (StrUtil.isEmpty(filePath)) {
+            return filePath;
+        }
+
+        int filePosi = filePath.lastIndexOf(File.separator);
+        if (filePosi == -1) {
+            return "";
+        }
+        return filePath.substring(0, filePosi);
+    }
+
+    /**
+     * 得到文件大小
+     * <ul>
+     * <li>路径为null或空字符串，返回-1</li>
+     * <li>路径存在并且为文件，返回文件大小，否则返回-1</li>
+     * <ul>
+     * 
+     * @param path 路径
+     * @return
+     */
+    public static long getFileSize(String path) {
+        if (StrUtil.isBlank(path)) {
+            return -1;
+        }
+        File file = new File(path);
+        return (file.exists() && file.isFile() ? file.length() : -1);
+    }
+    
 	/**
 	 * Reader处理接口
-	 * 
-	 * @author Luxiaolei
-	 *
 	 * @param <T>
 	 */
 	public interface ReaderHandler<T> {
 		public T handle(BufferedReader reader) throws IOException;
 	}
 
-	// ---------------------------------------------------------------------------------------- Private method start
-	// ---------------------------------------------------------------------------------------- Private method end
+	
 }

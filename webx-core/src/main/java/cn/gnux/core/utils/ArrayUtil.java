@@ -139,7 +139,7 @@ public class ArrayUtil extends org.apache.commons.lang3.ArrayUtils {
             throw new IllegalArgumentException("The length of source array must be greater than 0.");
         }
 
-        Integer[] array = ObjectUtils.transformIntArray(sourceArray);
+        Integer[] array = ObjectUtil.transformIntArray(sourceArray);
         return getNext(array, value, defaultValue, isCircle);
     }
 }

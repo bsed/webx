@@ -16,6 +16,7 @@ public class LogFactory {
 	private static final Class<? extends AbstractLog> currentLogClass = detectLog();
 	
 	public static Class<? extends AbstractLog> detectLog(){
+		@SuppressWarnings("unchecked")
 		List<Class<? extends AbstractLog>> logClassList = Arrays.asList(
 				Slf4jLog.class,
 				Log4jLog.class, 
