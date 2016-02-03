@@ -94,5 +94,10 @@
 			<artifactId>commons-httpclient</artifactId>
 			<version>3.1</version>
 		</dependency>
+		<dependency>
+		 <groupId>org.json</groupId>
+		 <artifactId>JSON</artifactId>
+		 <version>20080701</version>
+		</dependency>
 	</dependencies>
 </project>
